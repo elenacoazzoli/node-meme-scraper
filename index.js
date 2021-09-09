@@ -10,7 +10,12 @@ const memeUrl = 'https://memegen-link-examples-upleveled.netlify.app/';
 async function download(url, idx) {
   const response = await fetch(url);
   const buffer = await response.buffer();
-  fs.writeFile(`./memes/image${idx}.jpg`, buffer, () =>
+  const dir = './memes';
+
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+  fs.writeFile(`${dir}/image${idx}.jpg`, buffer, () =>
     console.log('finished downloading: ' + url),
   );
 }
